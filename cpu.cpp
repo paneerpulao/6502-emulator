@@ -188,8 +188,7 @@ u8 cpu::izy(){
 }
 
 
-u8 cpu::adc()
-{
+u8 cpu::adc(){
 	fetch();
 	t = (u16)a + (u16)data + (u16)get(C);
 
@@ -202,8 +201,7 @@ u8 cpu::adc()
 }
 
 
-u8 cpu::sbc()
-{
+u8 cpu::sbc(){
 	fetch();
 	
 	u16 val = ((u16)data) ^ 0x00FF;
@@ -217,8 +215,7 @@ u8 cpu::sbc()
 	return 1;
 }
 
-u8 cpu::nnd()
-{
+u8 cpu::nnd(){
 	fetch();
 	a = a & data;
 	assign(Z, a == 0x00);
@@ -226,8 +223,7 @@ u8 cpu::nnd()
 	return 1;
 }
 
-u8 cpu::asl()
-{
+u8 cpu::asl(){
 	fetch();
 	t = (u16)data << 1;
 	assign(C, (t & 0xFF00) > 0);
@@ -240,8 +236,7 @@ u8 cpu::asl()
 	return 0;
 }
 
-u8 cpu::bcc()
-{
+u8 cpu::bcc(){
 	if (get(C) == 0)
 	{
 		cycles++;
@@ -256,8 +251,7 @@ u8 cpu::bcc()
 }
 
 
-u8 cpu::bcs()
-{
+u8 cpu::bcs(){
 	if (get(C) == 1)
 	{
 		cycles++;
@@ -271,8 +265,7 @@ u8 cpu::bcs()
 	return 0;
 }
 
-u8 cpu::beq()
-{
+u8 cpu::beq(){
 	if (get(Z) == 1)
 	{
 		cycles++;
@@ -286,8 +279,7 @@ u8 cpu::beq()
 	return 0;
 }
 
-u8 cpu::bit()
-{
+u8 cpu::bit(){
 	fetch();
 	t = a & data;
 	assign(Z, (t & 0x00FF) == 0x00);
@@ -297,8 +289,7 @@ u8 cpu::bit()
 }
 
 
-u8 cpu::bmi()
-{
+u8 cpu::bmi(){
 	if (get(N) == 1)
 	{
 		cycles++;
@@ -312,8 +303,7 @@ u8 cpu::bmi()
 	return 0;
 }
 
-u8 cpu::bne()
-{
+u8 cpu::bne(){
 	if (get(Z) == 0)
 	{
 		cycles++;
@@ -328,8 +318,7 @@ u8 cpu::bne()
 }
 
 
-u8 cpu::bpl()
-{
+u8 cpu::bpl(){
 	if (get(N) == 0)
 	{
 		cycles++;
@@ -344,8 +333,7 @@ u8 cpu::bpl()
 }
 
 
-u8 cpu::brk()
-{
+u8 cpu::brk(){
 	pc++;
 	
 	assign(I, 1);
@@ -360,10 +348,8 @@ u8 cpu::brk()
 	return 0;
 }
 
-u8 cpu::bvc()
-{
-	if (get(V) == 0)
-	{
+u8 cpu::bvc(){
+	if (get(V) == 0){
 		cycles++;
 		next = pc + nxtr;
 
@@ -376,10 +362,8 @@ u8 cpu::bvc()
 }
 
 
-u8 cpu::bvs()
-{
-	if (get(V) == 1)
-	{
+u8 cpu::bvs(){
+	if (get(V) == 1){
 		cycles++;
 		next = pc + nxtr;
 
@@ -392,32 +376,27 @@ u8 cpu::bvs()
 }
 
 
-u8 cpu::clc()
-{
+u8 cpu::clc(){
 	assign(C, false);
 	return 0;
 }
 
-u8 cpu::cld()
-{
+u8 cpu::cld(){
 	assign(D, false);
 	return 0;
 }
 
-u8 cpu::cli()
-{
+u8 cpu::cli(){
 	assign(I, false);
 	return 0;
 }
 
-u8 cpu::clv()
-{
+u8 cpu::clv(){
 	assign(V, false);
 	return 0;
 }
 
-u8 cpu::cmp()
-{
+u8 cpu::cmp(){
 	fetch();
 	t = (u16)a - (u16)data;
 	assign(C, a >= data);
@@ -426,8 +405,7 @@ u8 cpu::cmp()
 	return 1;
 }
 
-u8 cpu::cpx()
-{
+u8 cpu::cpx(){
 	fetch();
 	t = (u16)x - (u16)data;
 	assign(C, x >= data);
@@ -436,8 +414,7 @@ u8 cpu::cpx()
 	return 0;
 }
 
-u8 cpu::cpy()
-{
+u8 cpu::cpy(){
 	fetch();
 	t = (u16)y - (u16)data;
 	assign(C, y >= data);
@@ -446,8 +423,7 @@ u8 cpu::cpy()
 	return 0;
 }
 
-u8 cpu::dec()
-{
+u8 cpu::dec(){
 	fetch();
 	t = data - 1;
 	write(next, t & 0x00FF);
@@ -456,24 +432,21 @@ u8 cpu::dec()
 	return 0;
 }
 
-u8 cpu::dex()
-{
+u8 cpu::dex(){
 	x--;
 	assign(Z, x == 0x00);
 	assign(N, x & 0x80);
 	return 0;
 }
 
-u8 cpu::dey()
-{
+u8 cpu::dey(){
 	y--;
 	assign(Z, y == 0x00);
 	assign(N, y & 0x80);
 	return 0;
 }
 
-u8 cpu::eor()
-{
+u8 cpu::eor(){
 	fetch();
 	a = a ^ data;	
 	assign(Z, a == 0x00);
@@ -481,8 +454,7 @@ u8 cpu::eor()
 	return 1;
 }
 
-u8 cpu::inc()
-{
+u8 cpu::inc(){
 	fetch();
 	t = data + 1;
 	write(next, t & 0x00FF);
@@ -491,30 +463,26 @@ u8 cpu::inc()
 	return 0;
 }
 
-u8 cpu::inx()
-{
+u8 cpu::inx(){
 	x++;
 	assign(Z, x == 0x00);
 	assign(N, x & 0x80);
 	return 0;
 }
 
-u8 cpu::iny()
-{
+u8 cpu::iny(){
 	y++;
 	assign(Z, y == 0x00);
 	assign(N, y & 0x80);
 	return 0;
 }
 
-u8 cpu::jmp()
-{
+u8 cpu::jmp(){
 	pc = next;
 	return 0;
 }
 
-u8 cpu::jsr()
-{
+u8 cpu::jsr(){
 	pc--;
 
 	write(0x0100 + sp--, (pc >> 8) & 0x00FF);
@@ -524,8 +492,7 @@ u8 cpu::jsr()
 	return 0;
 }
 
-u8 cpu::lda()
-{
+u8 cpu::lda(){
 	fetch();
 	a = data;
 	assign(Z, a == 0x00);
@@ -533,8 +500,7 @@ u8 cpu::lda()
 	return 1;
 }
 
-u8 cpu::ldx()
-{
+u8 cpu::ldx(){
 	fetch();
 	x = data;
 	assign(Z, x == 0x00);
@@ -542,8 +508,7 @@ u8 cpu::ldx()
 	return 1;
 }
 
-u8 cpu::ldy()
-{
+u8 cpu::ldy(){
 	fetch();
 	y = data;
 	assign(Z, y == 0x00);
@@ -551,37 +516,32 @@ u8 cpu::ldy()
 	return 1;
 }
 
-u8 cpu::lsr()
-{
+u8 cpu::lsr(){
 	fetch();
 	assign(C, data & 0x0001);
 	t = data >> 1;	
 	assign(Z, (t & 0x00FF) == 0x0000);
 	assign(N, t & 0x0080);
-	if (lookup[opcode].addrMode == &cpu::imp)
-		a = t & 0x00FF;
-	else
-		write(next, t & 0x00FF);
+	
+	if (lookup[opcode].addrMode == &cpu::imp) a = t & 0x00FF;
+	else write(next, t & 0x00FF);
+	
 	return 0;
 }
 
-u8 cpu::nop()
-{
-	switch (opcode) {
+u8 cpu::nop(){
+	switch (opcode){
 	case 0x1C:
 	case 0x3C:
 	case 0x5C:
 	case 0x7C:
 	case 0xDC:
-	case 0xFC:
-		return 1;
-		break;
+	case 0xFC: return 1; break;
 	}
 	return 0;
 }
 
-u8 cpu::ora()
-{
+u8 cpu::ora(){
 	fetch();
 	a = a | data;
 	assign(Z, a == 0x00);
@@ -589,22 +549,19 @@ u8 cpu::ora()
 	return 1;
 }
 
-u8 cpu::pha()
-{
+u8 cpu::pha(){
 	write(0x0100 + sp--, a);
 	return 0;
 }
 
-u8 cpu::php()
-{
+u8 cpu::php(){
 	write(0x0100 + sp--, st | B | X);
 	assign(B, 0);
 	assign(X, 0);
 	return 0;
 }
 
-u8 cpu::pla()
-{
+u8 cpu::pla(){
 	sp++;
 	a = read(0x0100 + sp);
 	assign(Z, a == 0x00);
@@ -612,145 +569,118 @@ u8 cpu::pla()
 	return 0;
 }
 
-u8 cpu::plp()
-{
+u8 cpu::plp(){
 	sp++;
 	st = read(0x0100 + sp);
 	assign(X, 1);
 	return 0;
 }
 
-u8 cpu::rol()
-{
+u8 cpu::rol(){
 	fetch();
 	t = (u16)(data << 1) | get(C);
 	assign(C, t & 0xFF00);
 	assign(Z, (t & 0x00FF) == 0x0000);
 	assign(N, t & 0x0080);
-	if (lookup[opcode].addrMode == &cpu::imp)
-		a = t & 0x00FF;
-	else
-		write(next, t & 0x00FF);
+	if (lookup[opcode].addrMode == &cpu::imp) a = t & 0x00FF;
+	else write(next, t & 0x00FF);
 	return 0;
 }
 
-u8 cpu::ror()
-{
+u8 cpu::ror(){
 	fetch();
 	t = (u16)(get(C) << 7) | (data >> 1);
 	assign(C, data & 0x01);
 	assign(Z, (t & 0x00FF) == 0x00);
 	assign(N, t & 0x0080);
-	if (lookup[opcode].addrMode == &cpu::imp)
-		a = t & 0x00FF;
-	else
-		write(next, t & 0x00FF);
+	if (lookup[opcode].addrMode == &cpu::imp) a = t & 0x00FF;
+	else write(next, t & 0x00FF);
 	return 0;
 }
 
-u8 cpu::rti()
-{
+u8 cpu::rti(){
 	sp++;
-	st = read(0x0100 + sp);
+	st = read(0x0100 + sp++);
 	st &= ~B;
 	st &= ~X;
 
-	sp++;
-	pc = (u16)read(0x0100 + sp);
-	sp++;
+	pc = (u16)read(0x0100 + sp++);
 	pc |= (u16)read(0x0100 + sp) << 8;
 	return 0;
 }
 
-u8 cpu::rts()
-{
-	sp++;
-	pc = (u16)read(0x0100 + sp);
-	sp++;
-	pc |= (u16)read(0x0100 + sp) << 8;
-	
+u8 cpu::rts(){
+	pc = (u16)read(0x0100 + ++sp);
+	pc |= (u16)read(0x0100 + ++sp) << 8;
 	pc++;
 	return 0;
 }
 
-u8 cpu::sec()
-{
+u8 cpu::sec(){
 	assign(C, true);
 	return 0;
 }
 
-u8 cpu::sed()
-{
+u8 cpu::sed(){
 	assign(D, true);
 	return 0;
 }
-u8 cpu::sei()
-{
+u8 cpu::sei(){
 	assign(I, true);
 	return 0;
 }
-u8 cpu::sta()
-{
+u8 cpu::sta(){
 	write(next, a);
 	return 0;
 }
 
-u8 cpu::stx()
-{
+u8 cpu::stx(){
 	write(next, x);
 	return 0;
 }
-u8 cpu::sty()
-{
+u8 cpu::sty(){
 	write(next, y);
 	return 0;
 }
 
-u8 cpu::tax()
-{
+u8 cpu::tax(){
 	x = a;
 	assign(Z, x == 0x00);
 	assign(N, x & 0x80);
 	return 0;
 }
 
-u8 cpu::tay()
-{
+u8 cpu::tay(){
 	y = a;
 	assign(Z, y == 0x00);
 	assign(N, y & 0x80);
 	return 0;
 }
-u8 cpu::tsx()
-{
+u8 cpu::tsx(){
 	x = sp;
 	assign(Z, x == 0x00);
 	assign(N, x & 0x80);
 	return 0;
 }
-u8 cpu::txa()
-{
+u8 cpu::txa(){
 	a = x;
 	assign(Z, a == 0x00);
 	assign(N, a & 0x80);
 	return 0;
 }
 
-u8 cpu::txs()
-{
+u8 cpu::txs(){
 	sp = x;
 	return 0;
 }
 
-u8 cpu::tya()
-{
+u8 cpu::tya(){
 	a = y;
 	assign(Z, a == 0x00);
 	assign(N, a & 0x80);
 	return 0;
 }
 
-u8 cpu::err()
-{
+u8 cpu::err(){
 	return 0;
 }
